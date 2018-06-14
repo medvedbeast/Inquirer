@@ -1,0 +1,568 @@
+﻿body
+{
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+.icon
+{
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+
+a, a:visited
+{
+    color: inherit;
+    text-decoration: inherit;
+    outline: none;
+}
+
+.shadowed
+{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.bounded
+{
+    border: 1px solid #CECECE;
+    border-radius: 2px;
+}
+
+.hidden
+{
+    display: none !important;
+}
+/***************************************************************************************/
+header
+{
+    background-color: #01579B;
+    padding: 20px 0;
+}
+
+    header .container
+    {
+        margin: 0 auto;
+        width: 1290px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        color: #FFFFFF;
+    }
+
+        header .container .title
+        {
+            font-family: 'Lobster';
+            font-size: 2em;
+            margin: -7px 0 0 0;
+        }
+
+        header .container .spacer
+        {
+            flex-grow: 2;
+        }
+
+        header .container a
+        {
+            margin: 0 0 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .container .icon:nth-child(2)
+        {
+            margin: 0 0 0 5px;
+        }
+
+    header #c-account-panel
+    {
+        transition: 0.1s all ease-in-out;
+        position: relative;
+        visibility: visible;
+        opacity: 1;
+        width: 1290px;
+        margin: 0 auto;
+        filter: drop-shadow(0 3px 6px rgba(0,0,0,0.16)) drop-shadow(0 3px 6px rgba(0,0,0,0.23));
+    }
+
+        header #c-account-panel.hidden
+        {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        header #c-account-panel svg
+        {
+            position: absolute;
+            top: -5px;
+            right: 68px;
+        }
+
+        header #c-account-panel .panel
+        {
+            position: absolute;
+            top: 6px;
+            background-color: white;
+            right: 0;
+            border-radius: 2px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+            header #c-account-panel .panel .text
+            {
+                padding: 0 20px 0 0;
+            }
+
+                header #c-account-panel .panel .text .name
+                {
+                    font-weight: bold;
+                }
+
+                header #c-account-panel .panel .text .email
+                {
+                    margin: 5px 0 0 0;
+                }
+
+            header #c-account-panel .panel .image
+            {
+                width: 75px;
+                height: 75px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-radius: 50%;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            header #c-account-panel .panel div.image
+            {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                header #c-account-panel .panel div.image .icon
+                {
+                    font-size: 60px;
+                    color: #cecece;
+                }
+
+/***************************************************************************************/
+.flex
+{
+    display: flex;
+}
+
+    .flex.column
+    {
+        flex-direction: column;
+    }
+/***************************************************************************************/
+main
+{
+    width: 1290px;
+    margin: 40px auto;
+}
+
+    main .block .header
+    {
+        padding: 0 20px;
+        border-bottom: 1px solid #cecece;
+        min-height: 74px;
+        display: flex;
+        align-items: center;
+    }
+
+        main .block .header .title
+        {
+            font-size: 1.6em;
+        }
+
+        main .block .header .spacer
+        {
+            flex-grow: 2;
+        }
+
+        main .block .header a
+        {
+            margin: 0 0 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            padding: 5px;
+            background-color: #03A9F4;
+            color: white;
+            min-width: 100px;
+            transition: 0.1s all ease-in-out;
+        }
+
+            main .block .header a:hover
+            {
+                cursor: pointer;
+                background-color: #01579B;
+            }
+
+        main .block .header .label
+        {
+            margin: 0 5px;
+        }
+
+    main .block .content
+    {
+        padding: 20px;
+    }
+
+    main .block .footer
+    {
+        padding: 20px;
+        border-top: 1px solid #cecece;
+        display: flex;
+        align-items: center;
+    }
+
+        main .block .footer .button,
+        main .block .footer .link
+        {
+            margin: 0 0 0 20px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            padding: 5px 12px 5px 10px;
+            background-color: #03A9F4;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s all ease-in-out;
+        }
+
+            main .block .footer .button:hover,
+            main .block .footer .link:hover
+            {
+                background-color: #01579B;
+            }
+
+            main .block .footer .button:first-child,
+            main .block .footer .link:first-child
+            {
+                margin: 0;
+            }
+
+            main .block .footer .button .label,
+            main .block .footer .link .label
+            {
+                margin: 0 0 0 5px;
+            }
+
+        main .block .footer .spacer
+        {
+            flex-grow: 1;
+        }
+
+        main .block .footer .pagination
+        {
+            display: flex;
+            align-items: center;
+        }
+
+            main .block .footer .pagination .page
+            {
+                margin: 0 5px;
+            }
+
+            main .block .footer .pagination .icon
+            {
+                color: #03A9F4;
+                padding: 5px;
+                border-radius: 2px;
+                transition: 0.1s all ease-in-out;
+            }
+
+                main .block .footer .pagination .icon:hover
+                {
+                    background-color: #01579B;
+                    color: white;
+                    cursor: pointer;
+                }
+
+/***************************************************************************************/
+.input label
+{
+    display: block;
+    padding: 0 0 0 1px;
+    margin: 20px 0 10px 0;
+    text-transform: uppercase;
+    color: #7d7d7d;
+}
+
+    .input label:first-child
+    {
+        margin: 0 0 10px 0;
+    }
+
+.input input,
+.input select,
+.input textarea
+{
+    border: 1px solid #cecece;
+    border-radius: 2px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    transition: 0.1s all ease-in-out;
+}
+
+    .input input:focus,
+    .input select:focus,
+    .input textarea:focus,
+    .input input:hover,
+    .input select:hover,
+    .input textarea:hover
+    {
+        margin: 0;
+        outline: 0;
+        border: 1px solid #01579B;
+    }
+
+.input .error:empty
+{
+    display: none;
+}
+
+.input .error
+{
+    display: block;
+    color: #B71C1C;
+    margin: 10px 0 0 0;
+}
+/***************************************************************************************/
+#c-image-panel
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.80);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    #c-image-panel .container
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+        #c-image-panel .container .title
+        {
+        }
+
+        #c-image-panel .container img
+        {
+            max-width: 1200px;
+            max-height: 75vh;
+        }
+
+        #c-image-panel .container .button
+        {
+            border-radius: 2px;
+            background-color: #03A9F4;
+            color: white;
+            padding: 10px 20px;
+            margin: 20px 0 0 0;
+            cursor: pointer;
+        }
+/***************************************************************************************/
+
+.dialog
+{
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .dialog .container
+    {
+        background-color: white;
+        padding: 40px;
+    }
+
+        .dialog .container form
+        {
+            max-width: 50vw;
+        }
+
+            .dialog .container form .title
+            {
+                text-align: center;
+                font-size: 1.6em;
+            }
+
+                .dialog .container form .title.error
+                {
+                    color: #B71C1C;
+                }
+
+                .dialog .container form .title.success
+                {
+                    color: #1B5E20;
+                }
+
+            .dialog .container form .information
+            {
+                margin: 20px 0 0 0;
+                color: #B5B5B5;
+                text-align: center;
+            }
+
+                .dialog .container form .information.normal
+                {
+                    color: black;
+                }
+
+                .dialog .container form .information span
+                {
+                    color: #03A9F4;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+
+            .dialog .container form .validation-summary-errors
+            {
+                margin: 20px 0 40px 0;
+            }
+
+                .dialog .container form .validation-summary-errors:empty
+                {
+                    margin: 0 0 40px 0;
+                }
+
+                .dialog .container form .validation-summary-errors .error
+                {
+                    display: block;
+                    margin: 20px 0 0 0;
+                    padding: 0;
+                    color: #B71C1C;
+                    list-style: none;
+                    text-align: center;
+                }
+
+            .dialog .container form .input
+            {
+                margin: 20px 0 0 0;
+            }
+
+        .dialog .container .controls
+        {
+            margin: 20px 0 0 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dialog .container > .controls .button
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 0 0 20px;
+            background-color: #03A9F4;
+            color: white;
+            border-radius: 2px;
+            padding: 10px 20px;
+            min-width: 125px;
+            box-sizing: border-box;
+        }
+
+            .dialog .container > .controls .button:first-child
+            {
+                margin: 0;
+            }
+
+            .dialog .container > .controls .button:hover
+            {
+                background-color: #01579B;
+                color: white;
+            }
+
+            .dialog .container > .controls .button .label
+            {
+                margin: 0 0 0 5px;
+            }
+
+        .dialog .container .social
+        {
+            margin: 40px 0 0 0;
+        }
+
+            .dialog .container .social .title
+            {
+                color: #B5B5B5;
+                text-align: center;
+            }
+
+            .dialog .container .social .controls
+            {
+                margin: 20px 0 0 0;
+                display: flex;
+            }
+
+                .dialog .container .social .controls .button
+                {
+                    display: flex;
+                    align-items: center;
+                    color: white;
+                    background-color: #03A9F4;
+                    border-radius: 2px;
+                    cursor: pointer;
+                    box-sizing: border-box;
+                    min-width: 125px;
+                    padding: 10px 20px;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 0 0 20px;
+                }
+
+                    .dialog .container .social .controls .button:first-child
+                    {
+                        margin: 0;
+                    }
+
+                    .dialog .container .social .controls .button .icon
+                    {
+                        margin: 0 5px 0 0;
+                    }
+
+                    .dialog .container .social .controls .button:hover
+                    {
+                        background-color: #01579B;
+                        color: white;
+                    }

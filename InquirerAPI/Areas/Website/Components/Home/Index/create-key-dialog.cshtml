@@ -1,0 +1,88 @@
+﻿@model GenericViewModel<CreateKeyViewModel>
+@if (Model.Section == "template")
+{
+    <div :id="id" class="dialog hidden">
+        <form>
+            <div class="title">Створення ключа API</div>
+            <div class="body">
+                <div class="input">
+                    <div class="label">Назва </div>
+                    <input vue-for="Data.Name" v-model="key.name" />
+                    <span class="error" vue-validation-for="Data.Name"></span>
+                </div>
+                <div class="input">
+                    <div class="label">Тип додатку</div>
+                    <select vue-for="Data.TypeId" v-model="key.type.id">
+                        <option v-for="type in types" :value="type.id">
+                            {{ type.name.toUpperCase() }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="submit" type="submit" v-on:click="OnSubmitDialog">Створити</button>
+                <button class="cancel" type="button" v-on:click="OnHideDialog">Назад</button>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        Vue.component("create-key-dialog", {
+            template: "#create-key-dialog-template",
+            data: () => {
+                return {
+                    id: "create-key-dialog",
+                    key: {
+                        name: "",
+                        type: {
+                            id: 1
+                        },
+                        userId: 0
+                    },
+                    types: []
+                }
+            },
+            created: function () {
+                this.types = this.$parent.keyTypes;
+                this.key.userId = this.$parent.user.id;
+            },
+            mounted: function () {
+                events.$on("ShowCreateKeyDialog", this.OnShowDialog);
+            },
+            methods: {
+                OnShowDialog: function () {
+                    this.key.name = "";
+                    this.key.type.id = 1;
+                    ShowDialog(this.id);
+                },
+                OnHideDialog: function () {
+                    HideDialog(this.id);
+                },
+                OnSubmitDialog: function (event) {
+                    event.preventDefault();
+                    
+                    const self = this;
+                    var form = $(`#${this.id} form`);
+                    if (form.valid()) {
+                        $.ajax({
+                            url: "/api/keys",
+                            method: "POST",
+                            data: JSON.stringify(self.key),
+                            contentType: "application/json",
+                            success: function (data) {
+                                var key = data;
+                                events.$emit("KeyAdded", key);
+                                HideDialog(self.id);
+                                self.key.name = "";
+                                self.key.type.id = 1;
+                            }
+                        });
+                    }
+                },
+                
+            }
+        });
+    </script>
+}

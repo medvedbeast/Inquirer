@@ -1,0 +1,9 @@
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\bin\Debug\netcoreapp2.0\InquirerDLL.deps.json
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\bin\Debug\netcoreapp2.0\InquirerDLL.dll
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\bin\Debug\netcoreapp2.0\InquirerDLL.pdb
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\obj\Debug\netcoreapp2.0\InquirerDLL.csproj.CoreCompileInputs.cache
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\obj\Debug\netcoreapp2.0\InquirerDLL.AssemblyInfoInputs.cache
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\obj\Debug\netcoreapp2.0\InquirerDLL.AssemblyInfo.cs
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\obj\Debug\netcoreapp2.0\InquirerDLL.dll
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\obj\Debug\netcoreapp2.0\InquirerDLL.pdb
+C:\Users\medve\Desktop\Inquirer\InquirerDLL\obj\Debug\netcoreapp2.0\InquirerDLL.csprojResolveAssemblyReference.cache

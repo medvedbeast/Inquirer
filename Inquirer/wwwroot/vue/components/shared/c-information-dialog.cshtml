@@ -1,0 +1,59 @@
+﻿@if (Model.Section == "template")
+{
+    <div :id="id" class="dialog hidden">
+        <div class="container shadowed">
+            <form class="form">
+                <div class="title" :class="classes">{{ title }}</div>
+                <div class="information normal">{{ message }}</div>
+            </form>
+            <div class="controls">
+                <div class="button shadowed" v-on:click="HideDialog">
+                    <div class="icon">clear</div>
+                    <div class="label">Закрити</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <script id="c-information-dialog-script" type="text/javascript">
+        Vue.component("c-information-dialog", {
+            template: "#c-information-dialog-template",
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    id: "c-information-dialog",
+                    title: "",
+                    message: "",
+                    isError: ""
+                }
+            },
+            computed: {
+                classes: function () {
+                    return {
+                        error: this.isError == true,
+                        success: this.isError == false
+                    }
+                }
+            },
+            created: function () {
+                events.$on("InformationDialog", this.OnInformationDialog);
+            },
+            methods: {
+                ShowDialog: function () {
+                    $(`#${this.id}`).removeClass("hidden");
+                },
+                HideDialog: function () {
+                    $(`#${this.id}`).addClass("hidden");
+                },
+                OnInformationDialog: function (data) {
+                    this.title = data.title;
+                    this.message = data.message;
+                    this.isError = data.isError || false;
+                    this.ShowDialog();
+                }
+            }
+        });
+    </script>
+}

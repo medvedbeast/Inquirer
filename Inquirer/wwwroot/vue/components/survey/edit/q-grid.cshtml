@@ -1,0 +1,111 @@
+﻿@if (Model.Section == "template")
+{
+    <div class="options grid">
+        <div class="flex column item" c-start="1" c-end="7">
+            <div class="input option" v-for="row in rows">
+                <label>Рядок</label>
+                <input class="shadowed" type="text" v-model="row.label" v-validate="'required'"
+                       :name="`question[${ $parent.key }].row[${ row.key }].label`" />
+                <div class="icon" title="Видалити" v-on:click="OnDeleteRowClicked(row.index)">delete</div>
+                <span v-show="errors.has(`question[${ $parent.key }].row[${ row.key }].label`)" class="error">
+                    {{ errors.first(`question[${ $parent.key }].row[${ row.key }].label`) }}
+                </span>
+            </div>
+        </div>
+        <div class="flex column item" c-start="7" c-end="13">
+            <div class="input option" v-for="column in columns">
+                <label>Стовпчик</label>
+                <input class="shadowed" type="text" v-model="column.value" v-validate="'required'"
+                       :name="`question[${ $parent.key }].column[${ column.key }].value`" />
+                <div class="icon" title="Видалити" v-on:click="OnDeleteColumnClicked(column.index)">delete</div>
+                <span v-show="errors.has(`question[${ $parent.key }].column[${ column.key }].value`)" class="error">
+                    {{ errors.first(`question[${ $parent.key }].column[${ column.key }].value`) }}
+                </span>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <script id="q-grid-script" type="text/javascript">
+        Vue.component("q-grid", {
+            template: "#q-grid-template",
+            props: ["element"],
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    rowIndex: 0,
+                    columnIndex: 0,
+                    rows: [],
+                    columns: [],
+                    buttons: []
+                }
+            },
+            created: function () {
+                if (this.element.data) {
+                    if (this.element.data.options.length > 0) {
+                        for (var i = 0; i < this.element.data.options.length; i++) {
+                            var e = this.element.data.options[i];
+                            if (e.label !== null) {
+                                this.rows.push(new Choice(this.rows, this.rowIndex++, e.label, e.value, null, false));
+                            } else {
+                                this.columns.push(new Choice(this.columns, this.columnIndex++, e.label, e.value, null, false));
+                            }
+                        }
+                    }
+                } else {
+                    this.rows.push(new Choice(this.rows, this.rowIndex++, "Перший рядок", null));
+                    this.rows.push(new Choice(this.rows, this.rowIndex++, "Другий рядок", null));
+                    this.columns.push(new Choice(this.columns, this.columnIndex++, null, "Перша колонка"));
+                    this.columns.push(new Choice(this.columns, this.columnIndex++, null, "Друга колонка"));
+                }
+                this.buttons = [
+                    {
+                        label: "Рядок",
+                        callback: this.OnAddRowClicked
+                    },
+                    {
+                        label: "Стовпчик",
+                        callback: this.OnAddColumnClicked
+                    },
+                ]
+            },
+            computed: {
+                result: function () {
+                    var r = [];
+                    for (var i = 0; i < this.rows.length; i++) {
+                        r.push({
+                            label: this.rows[i].label,
+                            value: null,
+                            image: null,
+                            isCustom: false
+                        });
+                    }
+                    for (var i = 0; i < this.columns.length; i++) {
+                        r.push({
+                            label: null,
+                            value: this.columns[i].value,
+                            image: null,
+                            isCustom: false
+                        });
+                    }
+                    return r;
+                }
+            },
+            methods: {
+                OnAddRowClicked: function () {
+                    this.rows.push(new Choice(this.rows, this.rowIndex++, "Рядок", null));
+                },
+                OnAddColumnClicked: function () {
+                    this.columns.push(new Choice(this.columns, this.columnIndex++, null, "Колонка"));
+                },
+                OnDeleteRowClicked: function (i) {
+                    this.rows.splice(i, 1);
+                },
+                OnDeleteColumnClicked: function (i) {
+                    this.columns.splice(i, 1);
+                }
+            }
+        });
+    </script>
+}

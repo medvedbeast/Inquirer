@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Статистика опитування | Inquirer";
+    ViewBag.Stylesheets = new[] { "survey-statistics.css" };
+    ViewBag.Components = new string[]
+    {
+        "c-header",
+        "c-account-panel",
+        "c-information-dialog",
+        "c-question"
+    };
+}
+<header class="shadowed">
+    <component is="c-header"></component>
+    <component is="c-account-panel"></component>
+</header>
+<form>
+    <main class="page">
+        <div id="controls">
+            <a :href="`/survey/${ survey.id }`" class="button shadowed">
+                <div class="icon">keyboard_backspace</div>
+                <div class="label">До опитування</div>
+            </a>
+            <div class="button shadowed">
+                <div class="icon">move_to_inbox</div>
+                <div class="label">Експорт</div>
+            </div>
+            <div class="spacer"></div>
+            <a class="button shadowed">
+                <div class="icon">delete</div>
+                <div class="label">Очистити</div>
+            </a>
+        </div>
+        <div id="questions">
+            <component is="c-question"
+                       v-for="question in questions"
+                       :key="question.key"
+                       :ref="`question[${question.key}]`"
+                       :element="question">
+            </component>
+        </div>
+    </main>
+</form>
+<component is="c-information-dialog"></component>

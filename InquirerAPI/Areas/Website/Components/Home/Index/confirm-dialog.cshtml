@@ -1,0 +1,53 @@
+﻿@model GenericViewModel
+@if (Model.Section == "template")
+{
+    <div :id="id" class="dialog hidden">
+        <form>
+            <div class="title">Підтвердження дії</div>
+            <div class="body">
+                <div class="text" v-html="text"></div>
+            </div>
+            <div class="controls">
+                <button class="submit" type="button" v-on:click="OnSubmitDialog">{{ confirmText }}</button>
+                <button class="cancel" type="button" v-on:click="OnHideDialog">Назад</button>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        Vue.component("confirm-dialog", {
+            template: "#confirm-dialog-template",
+            data: () => {
+                return {
+                    id: "confirm-dialog",
+                    text: "",
+                    confirmText: "",
+                    confirmData: null,
+                    confirmDelegate: null
+                }
+            },
+            mounted: function () {
+                const self = this;
+                events.$on("ShowConfirmDialog", self.OnShowDialog);
+            },
+            methods: {
+                OnShowDialog: function (context) {
+                    this.text = context.text;
+                    this.confirmText = context.confirmText;
+                    this.confirmData = context.confirmData;
+                    this.confirmDelegate = context.confirmDelegate;
+                    ShowDialog(this.id);
+                },
+                OnSubmitDialog: function () {
+                    events.$emit(this.confirmDelegate, this.confirmData);
+                    HideDialog(this.id);
+                },
+                OnHideDialog: function () {
+                    HideDialog(this.id);
+                }
+            }
+        });
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿@if (Model.Section == "template")
+{
+    <div class="options grid" :columns="parseInt(steps) + 1">
+        <div class="label item">
+            {{ first.label }}
+        </div>
+        <div class="input item" r-start="2">
+            <input type="radio" v-model="answer" :value="first.value" />
+        </div>
+        <div class="value item" r-start="3">
+            {{ first.value }}
+        </div>
+        <template v-for="n in (steps - 1)">
+            <div class="label item"></div>
+            <div class="input item" r-start="2">
+                <input type="radio" v-model="answer" :value="Number(n)" />
+            </div>
+            <div class="value item" r-start="3">{{ Number(n) }}</div>
+        </template>
+        <div class="label item">{{ last.label }}</div>
+        <div class="input item" r-start="2">
+            <input type="radio" v-model="answer" :value="last.value" />
+        </div>
+        <div class="value item" r-start="3">{{ last.value }}</div>
+        <div class="line"></div>
+        <input type="hidden" :name="`question[${ $parent.key }]`" v-model="answer" v-validate="$parent.isRequired == true ? 'question_required|required' : ''" />
+    </div>
+}
+else
+{
+    <script id="q-range-script" type="text/javascript">
+        Vue.component("q-range", {
+            template: "#q-range-template",
+            props: ["element"],
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    first: null,
+                    last: null,
+                    steps: null,
+                    answer: null
+                };
+            },
+            created: function () {
+                if (this.element) {
+                    this.first = {
+                        id: this.element.options[0].id,
+                        label: this.element.options[0].label,
+                        value: this.element.options[0].value,
+                    };
+                    this.last = {
+                        id: this.element.options[1].id,
+                        label: this.element.options[1].label,
+                        value: this.element.options[1].value,
+                    };
+                    this.steps = this.element.options[2].value;
+                }
+            },
+            computed: {
+                result: function () {
+                    return [
+                        new Answer(
+                            null,
+                            this.answer,
+                            null,
+                            this.element.id,
+                            application.user.id
+                        )
+                    ];
+                }
+            },
+            methods: {
+                Number: function (n) {
+                    var step = (parseInt(this.last.value) - parseInt(this.first.value)) / this.steps;
+                    return Math.round(parseInt(this.first.value) + n * step);
+                }
+            }
+        });
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@if (Model.Section == "template")
+{
+    <div :id="id" class="container">
+        <div class="title">
+            <a href="/">Inquirer</a>
+        </div>
+        <div class="spacer"></div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a v-on="{ mouseover: OnAccountIconOver, mouseout: OnAccountIconOut }">
+                <div class="label">{{ $parent.user.email }}</div>
+                <div class="icon">person</div>
+            </a>
+            <a href="/account/edit" title="Налаштування аккаунту">
+                <div class="icon">settings</div>
+            </a>
+            <a href="/account/logout" title="Вийти з аккаунту">
+                <div class="icon">exit_to_app</div>
+            </a>
+        }
+        else
+        {
+            <a href="/account/login?returnUrl=@(Context.Request.Path)">
+                <div class="label">Увійти</div>
+                <div class="icon">lock_open</div>
+            </a>
+            <a href="/account/register?returnUrl=@(Context.Request.Path)">
+                <div class="label">Зареєструватися</div>
+                <div class="icon">assignment</div>
+            </a>
+        }
+    </div>
+}
+else
+{
+    <script id="c-header-script" type="text/javascript">
+        Vue.component("c-header", {
+            template: "#c-header-template",
+            data: () => {
+                return {
+                    id: "c-header"
+                }
+            },
+            methods: {
+                OnAccountIconOver: function () {
+                    events.$emit("ShowAccountPanel");
+                },
+                OnAccountIconOut: function () {
+                    events.$emit("HideAccountPanel");
+                }
+            }
+        });
+    </script>
+}

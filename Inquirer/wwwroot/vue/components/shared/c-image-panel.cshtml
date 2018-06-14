@@ -1,0 +1,39 @@
+﻿@if (Model.Section == "template")
+{
+    <div :id="id" v-show="isShown == true">
+        <div class="container">
+            <div class="title"></div>
+            <img :src="data" />
+            <div class="button" v-on:click="OnCloseClicked">закрити</div>
+        </div>
+    </div>
+}
+else
+{
+    <script id="c-image-panel-script" type="text/javascript">
+        Vue.component("c-image-panel", {
+            template: "#c-image-panel-template",
+            data: () => {
+                return {
+                    id: "c-image-panel",
+                    data: null,
+                    isShown: false
+                }
+            },
+            created: function () {
+                const self = this;
+                events.$on("ImageEnlarged", self.OnImageEnlarged);
+            }, 
+            methods: {
+                OnImageEnlarged: function (image) {
+                    this.data = image;
+                    this.isShown = true;
+                },
+                OnCloseClicked: function () {
+                    this.data = null;
+                    this.isShown = false;
+                }
+            }
+        });
+    </script>
+}

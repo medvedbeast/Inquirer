@@ -1,0 +1,91 @@
+﻿@model GenericViewModel
+@if (Model.Section == "template")
+{
+    <div :id="id" class="block shadowed" columns="4">
+        <div class="header">
+            <div class="title">Лог подій</div>
+            <div class="spacer"></div>
+            <div v-if="pagination.total > 1" class="pagination">
+                <div class="icon" v-on:click="OnPreviousPageClicked">chevron_left</div>
+                <div class="number">{{ pagination.current + 1 }} з {{ pagination.total }}</div>
+                <div class="icon" v-on:click="OnNextPageClicked">chevron_right</div>
+            </div>
+        </div>
+        <div class="content">
+            <div v-if="activities.length > 0" class="container">
+                <div v-for="a in activities" class="item">
+                    <div class="top">
+                        <div class="status" :class="{ success: a.status }">{{ a.status == true ? "Success" : "Error" }}</div>
+                        <div class="key">{{ a.key.name }} <i>({{ a.key.content }})</i></div>
+                    </div>
+                    <div class="text" v-html="a.content"></div>
+                    <div class="bottom">
+                        <div class="group">
+                            <div class="icon">label</div>
+                            <div class="label">{{ a.id }}</div>
+                        </div>
+                        <div class="spacer"></div>
+                        <div class="group">
+                            <div class="icon">access_time</div>
+                            <div class="label">{{ a.occuredOn }}</div>
+                        </div>
+                        <div class="group">
+                            <div class="icon">person</div>
+                            <div class="label">{{ a.externalUserId }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-else class="placeholder">
+                <div class="icon">info_outline</div>
+                <div class="label">Подій не знайдено.</div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        Vue.component("activity-log-component", {
+            template: "#activity-log-component-template",
+            data: () => {
+                return {
+                    id: "activity-log-component",
+                    activities: [],
+                    pagination: {
+                        current: 0,
+                        total: 0,
+                        itemsPerPage: 15
+                    },
+                }
+            },
+            created: function () {
+                this.pagination.total = Math.ceil(this.$parent.activitiesCount / this.pagination.itemsPerPage);
+                this.Load(this);
+            },
+            methods: {
+                Load: function (self) {
+                    $.ajax({
+                        url: `/api/activities?start=${self.pagination.current * self.pagination.itemsPerPage}&limit=${self.pagination.itemsPerPage}`,
+                        method: "GET",
+                        success: function (data) {
+                            self.activities = data;
+                        }
+                    });
+                },
+                OnNextPageClicked: function () {
+                    if (this.pagination.current + 1 < this.pagination.total) {
+                        this.pagination.current += 1;
+                        this.Load(this);
+                    }
+                },
+                OnPreviousPageClicked: function () {
+                    if (this.pagination.current - 1 >= 0) {
+                        this.pagination.current -= 1;
+                        this.Load(this);
+                    }
+                }
+            }
+        });
+    </script>
+}

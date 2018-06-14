@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Вхід | Inquirer";
+    ViewBag.Stylesheets = new[] { "login.css" };
+}
+<div class="page">
+    <div class="container shadowed">
+        <form class="form">
+            <input type="hidden" v-model="returnUrl" />
+            <div class="logo">Inquirer</div>
+            <div class="title">Вхід</div>
+            <div class="information">
+                Немає аккаунту? Ви можете <a :href="`/account/register`">зареєструватися тут</a>.
+            </div>
+            <div class="validation-summary-errors">
+                <span v-for="e in errors.items" v-if="e.field == 'model'" class="error">{{ e.msg }}</span>
+            </div>
+            <div class="input">
+                <label for="email">E-mail:</label>
+                <input class="shadowed" name="email" type="text" v-model="email" v-validate="'required|email'" />
+                <span v-show="errors.has('email')" class="error">{{ errors.first('email') }}</span>
+            </div>
+            <div class="input">
+                <label for="password">Пароль:</label>
+                <input class="shadowed" name="password" type="password" v-model="password" v-validate="'required'" />
+                <span v-show="errors.has('password')" class="error">{{ errors.first('password') }}</span>
+            </div>
+            <div class="submit">
+                <div class="shadowed" v-on:click="OnLoginClicked">
+                    <div class="icon">launch</div>
+                    <div class="label">увійти</div>
+                </div>
+            </div>
+        </form>
+        <div class="social">
+            <div class="title">Чи увійдіть через:</div>
+            <div class="buttons">
+                <a>
+                    <div class="item shadowed">
+                        <div class="icon">fingerprint</div>
+                        <div class="label">Google</div>
+                    </div>
+                </a>
+                <a>
+                    <div class="item shadowed">
+                        <div class="icon">fingerprint</div>
+                        <div class="label">Facebook</div>
+                    </div>
+                </a>
+                <a>
+                    <div class="item shadowed">
+                        <div class="icon">fingerprint</div>
+                        <div class="label">Microsoft</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

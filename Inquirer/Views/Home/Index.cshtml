@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Головна сторінка | Inquirer";
+    ViewBag.Stylesheets = new[] { "home.css" };
+    ViewBag.Components = new[]
+    {
+        "c-header",
+        "c-account-panel"
+    };
+}
+<header class="shadowed">
+    <component is="c-header"></component>
+    <component is="c-account-panel"></component>
+</header>
+<main class="page">
+    <div id="statistics" class="block flex">
+        <div class="item">
+            <div class="label">Створено опитувань:</div>
+            <div class="value">{{ statistics.quantity }}</div>
+        </div>
+        <div class="item">
+            <div class="label">Відкрито опитувань:</div>
+            <div class="value">{{ statistics.open }}</div>
+        </div>
+        <div class="item">
+            <div class="label">Завершено опитувань:</div>
+            <div class="value">{{ statistics.closed }}</div>
+        </div>
+        <div class="item">
+            <div class="label">Зібрано відповідей:</div>
+            <div class="value">{{ statistics.answers }}</div>
+        </div>
+    </div>
+    <div id="surveys" class="block bounded">
+        <div class="header">
+            <div class="title">Поточні опитування</div>
+        </div>
+        <div class="content">
+            <table v-if="surveys.length > 0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <td class="wide">Назва</td>
+                        <td class="center">Відкрите до</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="s in surveys">
+                        <td>
+                            <a :href="`survey/${ s.id }`">{{ s.title }}</a>
+                        </td>
+                        <td class="center">{{ Format(s.endDate, "dd.MM.yyyy HH:mm") }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div v-else class="placeholder">
+                <div class="icon">info_outline</div>
+                <div class="label">Ви ще не маєте активних опитувань.</div>
+            </div>
+        </div>
+        <div class="footer">
+
+            <div class="button shadowed" v-on:click="OnCreateSurveyClicked">
+                <div class="icon">add</div>
+                <div class="label">Створити</div>
+            </div>
+            <a class="link shadowed">
+                <div class="icon">list</div>
+                <div class="label">Архів</div>
+            </a>
+            <div class="spacer"></div>
+            <div class="pagination">
+                <div class="icon">chevron_left</div>
+                <div class="page">сторінка 0 із 0</div>
+                <div class="icon">chevron_right</div>
+            </div>
+        </div>
+    </div>
+</main>

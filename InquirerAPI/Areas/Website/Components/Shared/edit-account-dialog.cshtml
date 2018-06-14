@@ -1,0 +1,104 @@
+﻿@model GenericViewModel<EditAccountViewModel>
+@if (Model.Section == "template")
+{
+    <div :id="id" class="dialog hidden">
+        <form>
+            <input vue-for="Data.Id" type="hidden" v-model="user.id" />
+            <div class="title">Налаштування аккаунту</div>
+            <div class="body">
+                <div class="text error">{{ message }}</div>
+                <div class="input">
+                    <div class="label">Ім'я</div>
+                    <input vue-for="Data.Name" v-model="user.name" />
+                    <span class="error" vue-validation-for="Data.Name"></span>
+                </div>
+                <div class="input">
+                    <div class="label">Електронна пошта</div>
+                    <input vue-for="Data.Email" v-model="user.email" />
+                    <span class="error" vue-validation-for="Data.Email"></span>
+                </div>
+                <div class="input">
+                    <div class="label">Новий пароль</div>
+                    <input vue-for="Data.Password" v-model="user.password" />
+                    <span class="error" vue-validation-for="Data.Password"></span>
+                </div>
+                <div class="input">
+                    <div class="label">Новий пароль (ще раз)</div>
+                    <input vue-for="Data.PasswordConfirmation" v-model="user.passwordConfirmation" />
+                    <span class="error" vue-validation-for="Data.PasswordConfirmation"></span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="submit" type="button" v-on:click="OnSubmitDialog">Зберегти</button>
+                <button class="cancel" type="button" v-on:click="OnHideDialog">Назад</button>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        Vue.component("edit-account-dialog", {
+            template: "#edit-account-dialog-template",
+            data: () => {
+                return {
+                    id: "edit-account-dialog",
+                    message: "",
+                    user: {
+                        id: 0,
+                        name: "",
+                        email: "",
+                        emailConfirmation: ""
+                    }
+                }
+            },
+            created: function () {
+                this.user.id = this.$parent.user.id;
+                this.user.name = this.$parent.user.name;
+                this.user.email = this.$parent.user.email;
+            },
+            mounted: function () {
+                events.$on("ShowEditAccountDialog", this.OnShowDialog);
+            },
+            methods: {
+                OnShowDialog: function () {
+                    this.user.name = this.$parent.user.name;
+                    this.user.email = this.$parent.user.email;
+                    this.user.password = "";
+                    this.user.passwordConfirmation = "";
+                    ShowDialog(this.id);
+                },
+                OnHideDialog: function () {
+                    HideDialog(this.id);
+                },
+                OnSubmitDialog: function (event) {
+                    const self = this;
+
+                    var data = {
+                        Id: this.user.id,
+                        Name: this.user.name,
+                        Email: this.user.email,
+                        Password: this.user.password,
+                        PasswordConfirmation: this.user.passwordConfirmation
+                    };
+
+                    $.ajax({
+                        url: "/account/edit",
+                        method: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        success: function (response) {
+                            if (response.status === true) {
+                                self.$parent.user.name = self.user.name;
+                                self.$parent.user.email = self.user.email;
+                                HideDialog(self.id);
+                            } else {
+                                self.message = response.message;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+}

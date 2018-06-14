@@ -1,0 +1,120 @@
+﻿#statistics
+{
+    overflow: visible;
+    border-radius: 0;
+    border: 1px dashed #cecece;
+    border-radius: 2px;
+    padding: 20px 0;
+    justify-content: space-between;
+}
+
+#statistics .item
+{
+    display: flex;
+    align-items: center;
+    flex-basis: 25%;
+    justify-content: center;
+}
+
+#statistics .item .label
+{
+    text-transform: uppercase;
+    color: #808080;
+}
+
+#statistics .item .value
+{
+    margin: 0 0 0 10px;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+/*********************************************************************/
+#surveys
+{
+    margin: 40px 0 0 0;
+    width: 100%;
+    background-color: white;
+}
+
+#surveys .content .placeholder
+{
+    border: 1px dashed #cecece;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#surveys .content .placeholder .icon
+{
+    color: #03A9F4;
+    font-size: 48px;
+    margin: 0 0 10px 0;
+}
+
+main .block .content table
+{
+    width: 100%;
+}
+
+main .block .content table thead tr
+{
+    white-space: nowrap;
+    background-color: #B3E5FC;
+    font-weight: bold;
+}
+
+main .block .content table thead tr td
+{
+    border-top: 0;
+}
+
+main .block .content table tr
+{
+    height: 40px;
+}
+
+main .block .content table tr td
+{
+    padding: 10px;
+    border-top: 1px solid #CECECE;
+    border-left: 1px solid #CECECE;
+    min-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+main .block .content table tr td:first-child
+{
+    border-left: 0;
+}
+
+main .block .content table tr td a:hover
+{
+    text-decoration: underline;
+    color: #03A9F4;
+    cursor: pointer;
+}
+
+main .block .content table tr td.wide
+{
+    width: 100%;
+}
+
+main .block .content table tr td.center
+{
+    text-align: center;
+}
+
+main .block .content table tr td.left
+{
+    text-align: center;
+}
+
+main .block .content table tr td.right
+{
+    text-align: center;
+}

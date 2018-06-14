@@ -1,0 +1,95 @@
+﻿@if (Model.Section == "template")
+{
+    <div class="options">
+        <div class="input">
+            <input type="radio" :name="`question[${ $parent.key }].list.value`" v-model="other.isSelected" :value="false" />
+            <label :for="`question[${ $parent.key }].list.value`">Відповідь зі списку</label>
+            <select class="shadowed" v-model="answer">
+                <option disabled value="null">-- Не вибрано --</option>
+                <option v-for="option in options" :value="option.id">
+                    {{ option.label }}
+                </option>
+            </select>
+        </div>
+        <div v-if="other != null" class="input">
+            <input type="radio" v-model="other.isSelected" :value="true"
+                   :name="`question[${ $parent.key }].other`"
+                   :id="`question[${ $parent.key }].other`" />
+            <label :for="`question[${ $parent.key }].other`">{{ other.label }}</label>
+            <input type="text" class="shadowed" :name="`question[${ $parent.key }].other.answer`" v-model="other.answer" v-if="other.isSelected" v-validate="'required'" />
+            <span v-show="errors.has(`question[${ $parent.key }].other.answer`) && other.isSelected" class="error">
+                {{ errors.first(`question[${ $parent.key }].other.answer`) }}
+            </span>
+        </div>
+        <input type="hidden" :name="`question[${ $parent.key }]`" v-model="answer" v-validate="$parent.isRequired == true ? 'question_required|required' : ''" />
+    </div>
+}
+else
+{
+    <script id="q-select-script" type="text/javascript">
+        Vue.component("q-select", {
+            template: "#q-select-template",
+            props: ["element"],
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    list: {
+                        value: null,
+                        label: null
+                    },
+                    options: [],
+                    other: null,
+                    answer: null
+                };
+            },
+            created: function () {
+                if (this.element) {
+                    for (var i = 0; i < this.element.options.length; i++) {
+                        var o = this.element.options[i];
+                        if (o.isCustom != true) {
+                            this.options.push(new Choice(
+                                i,
+                                o.id,
+                                o.label,
+                                o.value,
+                                o.image
+                            ));
+                        } else {
+                            this.other = {
+                                id: o.id,
+                                label: o.label,
+                                answer: "",
+                                isSelected: false
+                            }
+                        }
+                    }
+                }
+            },
+            computed: {
+                result: function () {
+                    var result = [];
+
+                    if (this.other.isSelected && this.other.answer) {
+                        result.push(new Answer(
+                            null,
+                            this.other.answer,
+                            this.other.id,
+                            this.element.id,
+                            application.user.id
+                        ));
+                    } else if (this.answer) {
+                        result.push(new Answer(
+                            null,
+                            null,
+                            this.answer,
+                            this.element.id,
+                            application.user.id
+                        ));
+                    }
+
+                    return result;
+                }
+            }
+        });
+    </script>
+}

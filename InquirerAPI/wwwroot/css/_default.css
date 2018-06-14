@@ -1,0 +1,447 @@
+﻿body
+{
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    background-color: #F8F8F8;
+}
+
+.icon
+{
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+
+a, a:visited
+{
+    color: inherit;
+    text-decoration: inherit;
+    outline: none;
+}
+
+.shadowed
+{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.bounded
+{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+}
+
+input:focus,
+select:focus,
+button:focus
+{
+    outline: 0;
+}
+/***************************************************************************************/
+header
+{
+    background-color: #01579B;
+    height: 50px;
+}
+
+header .container
+{
+    margin: 0 auto;
+    width: 1290px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+header .container .title
+{
+    font-family: 'Lobster';
+    font-size: 2em;
+    margin: -7px 0 0 0;
+}
+
+header .container .title b
+{
+    font-family: 'Roboto', sans-serif;
+}
+
+header .container .spacer
+{
+    flex-grow: 2;
+}
+
+header .container a
+{
+    display: flex;
+    align-items: center;
+}
+
+header .container .icon
+{
+    margin: 0 0 0 10px;
+}
+
+header #account-panel
+{
+    position: relative;
+    width: 1290px;
+    margin: 0 auto;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.16)) drop-shadow(0 3px 6px rgba(0,0,0,0.23));
+}
+
+header #account-panel.hidden
+{
+    display: none;
+}
+
+header #account-panel svg
+{
+    position: absolute;
+    top: -5px;
+    right: 68px;
+}
+
+header #account-panel .panel
+{
+    position: absolute;
+    top: 6px;
+    background-color: white;
+    right: 0;
+    border-radius: 2px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+header #account-panel .panel .text
+{
+    padding: 0 20px 0 0;
+}
+
+header #account-panel .panel .text .name
+{
+    font-weight: bold;
+}
+
+header #account-panel .panel .text .email
+{
+    margin: 5px 0 0 0;
+}
+
+header #account-panel .panel .image
+{
+    width: 75px;
+    height: 75px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/***************************************************************************************/
+.page
+{
+    width: 1290px;
+    margin: 40px auto;
+}
+
+.page .container
+{
+    display: flex;
+    margin: 40px 0 0 -20px;
+    align-items: flex-start;
+}
+
+.page .container:first-child
+{
+    margin: 0 0 0 -20px;
+}
+
+
+
+.page .container .block
+{
+    margin: 0 0 0 20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.page .container [columns='1']
+{
+    flex-basis: 16.6%;
+}
+
+.page .container [columns='2']
+{
+    flex-basis: 33.3%;
+}
+
+.page .container [columns='3']
+{
+    flex-basis: 50%;
+}
+
+.page .container [columns='4']
+{
+    flex-basis: 66.6%;
+}
+
+.page .container [columns='5']
+{
+    flex-basis: 83.3%;
+}
+
+.page .container [columns='6']
+{
+    flex-basis: 100%;
+}
+
+.page .container .block .header
+{
+    padding: 0 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background-color: #01579B;
+    color: #FFFFFF;
+}
+
+.page .container .block .header .title
+{
+    text-transform: uppercase;
+}
+
+.page .container .block .header .spacer
+{
+    flex-grow: 2;
+}
+
+.page .container .block .header .pagination
+{
+    display: flex;
+    align-items: center;
+}
+
+.page .container .block .header .pagination .number
+{
+    margin: 0 10px;
+}
+
+.page .container .block .header a
+{
+    margin: 0 0 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.page .container .block .header a:hover
+{
+    cursor: pointer;
+}
+
+.page .container .block .header .icon
+{
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.page .container .block .header .label
+{
+    margin: 0 0 0 5px;
+    line-height: 40px;
+}
+
+.page .container .block .content
+{
+    padding: 20px;
+}
+
+.page .container .block .content table
+{
+    width: 100%;
+}
+
+.page .container .block .content table thead tr
+{
+    white-space: nowrap;
+    background-color: #B3E5FC;
+    font-weight: bold;
+}
+
+.page .container .block .content table thead tr td
+{
+    border-top: 1px solid #03A9F4;
+}
+
+.page .container .block .content table tr
+{
+    height: 40px;
+}
+
+.page .container .block .content table tr td
+{
+    padding: 10px;
+    border-bottom: 1px solid #03A9F4;
+    border-right: 1px solid #03A9F4;
+    min-height: 20px;
+    overflow: hidden;
+}
+
+.page .container .block .content table tr td:first-child
+{
+    border-left: 1px solid #03A9F4;
+}
+
+.page .container .block .content table tr td a:hover
+{
+    text-decoration: underline;
+    color: #03A9F4;
+    cursor: pointer;
+}
+
+.page .container .block .content table tr td.wide
+{
+    width: 100%;
+}
+
+.page .container .block .content table tr td.center
+{
+    text-align: center;
+}
+
+.page .container .block .content table tr td.left
+{
+    text-align: center;
+}
+
+.page .container .block .content table tr td.right
+{
+    text-align: center;
+}
+/***************************************************************************************/
+.dialog
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog.hidden
+{
+    display: none;
+}
+
+.dialog form
+{
+    padding: 40px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.dialog form .title
+{
+    font-size: 1.6em;
+    color: #03A9F4;
+    text-align: center;
+}
+
+.dialog form .body .text
+{
+    margin: 20px 0 0 0;
+}
+
+.dialog form .body .text.error
+{
+    color: #B71C1C;
+}
+
+.dialog form .input
+{
+    min-width: 300px;
+    margin: 20px 0 0 0;
+}
+
+.dialog form .input .label
+{
+}
+
+.dialog form .input input,
+.dialog form .input select
+{
+    height: 35px;
+    box-sizing: border-box;
+    margin: 5px 0 0 0;
+    background-color: #f8f8f8;
+    border: 0;
+    border-bottom: 4px solid #03A9F4;
+    border-radius: 2px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+.dialog form .input .error
+{
+    margin: 5px 0 0 0;
+    color: #B71C1C;
+    display: block;
+}
+
+.dialog form .input .error:empty
+{
+    margin: 0;
+}
+
+.dialog form .controls
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog form .controls button
+{
+    padding: 10px 20px;
+    border-radius: 2px;
+    border: 1px solid #03A9F4;
+    color: #03A9F4;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 20px 0 0 20px;
+}
+
+.dialog form .controls button:first-child
+{
+    margin: 20px 0 0 0;
+}
+
+.dialog form .controls button:hover
+{
+    border: 1px solid #01579B;
+    background-color: #01579B;
+    color: #FFFFFF;
+}
+/***************************************************************************************/
+/***************************************************************************************/
+/***************************************************************************************/
+/***************************************************************************************/

@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Налаштування аккаунта | Inquirer";
+    ViewBag.Stylesheets = new[] { "edit-account.css" };
+    ViewBag.Components = new[]
+    {
+        "c-header"
+    };
+}
+<header class="shadowed">
+    <component is="c-header"></component>
+</header>
+<main class="page">
+    <div class="grid">
+        <form class="flex column item" c-start="1" c-end="10">
+            <div id="information" class="block bounded">
+                <div class="header">
+                    <div class="title">Основна інформація</div>
+                </div>
+                <div class="content grid">
+                    <div class="input item" c-start="1" c-end="7">
+                        <label for="name">Повне імя</label>
+                        <input class="shadowed" name="name" type="text" v-model="user.name" v-validate="'required'" />
+                        <span v-show="errors.has('name')" class="error">{{ errors.first('name') }}</span>
+                    </div>
+                    <div class="input item" c-start="7" c-end="13">
+                        <label for="email">Електронна пошта</label>
+                        <input class="shadowed" name="email" type="email" v-model="user.email" v-validate="'required|email'" />
+                        <span v-show="errors.has('email')" class="error">{{ errors.first('email') }}</span>
+                    </div>
+                    <div class="input item" c-start="1" c-end="7" r-start="2">
+                        <label for="password">Пароль</label>
+                        <input class="shadowed" name="password" type="password" v-model="user.password" />
+                        <span v-show="errors.has('password')" class="error">{{ errors.first('password') }}</span>
+                    </div>
+                    <div class="input item" c-start="7" c-end="13" r-start="2">
+                        <label for="passwordConfirmation">Новий пароль (ще раз)</label>
+                        <input class="shadowed" name="passwordConfirmation" type="password" v-model="user.passwordConfirmation" />
+                        <span v-show="errors.has('passwordConfirmation')" class="error">{{ errors.first('passwordConfirmation') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div id="additional-information" class="block item bounded" c-start="1" c-end="10" r-start="2">
+                <div class="header">
+                    <div class="title">Додаткова інформація</div>
+                </div>
+                <div class="content grid">
+                    <div class="input item" c-start="1" c-end="7" r-start="1">
+                        <label for="sex">Стать</label>
+                        <select class="shadowed" name="sex" v-model="user.sex">
+                            <option value="null">-- не вказано --</option>
+                            <option v-for="e in enumerations.sexes" :value="e.id">{{ e.name }}</option>
+                        </select>
+                    </div>
+                    <div class="input item" c-start="7" c-end="13" r-start="1">
+                        <label for="language">Мова спілкування</label>
+                        <select class="shadowed" name="language" v-model="user.language">
+                            <option value="null">-- не вказано --</option>
+                            <option v-for="e in enumerations.languages" :value="e.id">{{ e.name }}</option>
+                        </select>
+                    </div>
+                    <div class="input item" c-start="1" c-end="7" r-start="2">
+                        <label for="educationType">Рівень освіти</label>
+                        <select class="shadowed" name="educationType" v-model="user.educationType">
+                            <option value="null">-- не вказано --</option>
+                            <option v-for="e in enumerations.educationTypes" :value="e.id">{{ e.name }}</option>
+                        </select>
+                    </div>
+                    <div class="input item" c-start="7" c-end="13" r-start="2">
+                        <label for="educationProgress">Статус освіти</label>
+                        <select class="shadowed" name="educationProgress" v-model="user.educationProgress">
+                            <option value="null">-- не вказано --</option>
+                            <option v-for="e in enumerations.educationProgresses" :value="e.id">{{ e.name }}</option>
+                        </select>
+                    </div>
+                    <div class="input item" c-start="1" c-end="7" r-start="3">
+                        <label for="occupation">Рід занять</label>
+                        <select class="shadowed" name="occupation" v-model="user.occupation">
+                            <option value="null">-- не вказано --</option>
+                            <option v-for="e in enumerations.occupations" :value="e.id">{{ e.name }}</option>
+                        </select>
+                    </div>
+                    <div class="input item" c-start="7" c-end="13" r-start="3">
+                        <label for="location">Місце проживання</label>
+                        <select class="shadowed" name="location" v-model="user.location">
+                            <option value="null">-- не вказано --</option>
+                            <option v-for="e in enumerations.locations" :value="e.id">{{ e.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button id="submit" type="submit"></button>
+        </form>
+        <div class="flex column item" c-start="10" c-end="13">
+            <div id="image" class="block bounded">
+                <div class="content" v-on="{ mouseover: OnImageOver, mouseout: OnImageOut }">
+                    <img v-if="user.image.length > 0" class="image shadowed" :src="user.image" />
+                    <div v-else class="icon shadowed">person</div>
+                    <div class="popup icon hidden" v-on:click="OnChangeImageClicked">file_upload</div>
+                </div>
+                <input id="image-input" type="file" v-on:change="OnImageInputChanged" />
+            </div>
+            <div id="controls" class="block">
+                <div class="button shadowed" v-on:click="OnSubmitFormClicked">
+                    <div class="icon">save</div>
+                    <div class="label">зберегти зміни</div>
+                </div>
+                <div class="button shadowed">
+                    <div class="icon">delete</div>
+                    <div class="label">видалити аккаунт</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

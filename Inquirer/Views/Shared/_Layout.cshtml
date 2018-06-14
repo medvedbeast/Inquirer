@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+
+    <!-- meta -->
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="~/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- libraries -->
+    <script src="~/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/vendor/jquery-dateformat/dist/jquery-dateFormat.min.js"></script>
+    <!--
+    <script src="~/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/vendor/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    -->
+    <script src="~/vendor/vue/dist/vue.js"></script>
+    <script src="~/vendor/vee-validate/dist/vee-validate.min.js"></script>
+
+    <!-- scripts -->
+    <script src="~/js/validation.js" type="text/javascript"></script>
+    <script src="~/js/image.js" type="text/javascript"></script>
+    @{
+        if (ViewBag.Scripts != null)
+        {
+            foreach (var script in ViewBag.Scripts)
+            {
+                <script src="~/js/@script" type="text/javascript"></script>
+            }
+        }
+    }
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900&amp;subset=cyrillic-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link href="~/css/grid.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/_default.css" rel="stylesheet" type="text/css" />
+    @{
+        if (ViewBag.Stylesheets != null)
+        {
+            foreach (var style in ViewBag.Stylesheets)
+            {
+                <link href="~/css/@style" rel="stylesheet" type="text/css" />
+            }
+        }
+    }
+
+</head>
+<body>
+
+    <!-- page -->
+    <div id="page-root">
+        @RenderBody()
+    </div>
+
+    <!-- vue  -->
+    <script id="events" type="text/javascript">
+        const events = new Vue();
+    </script>
+    <script id="model" type="text/javascript">
+        const model = @(Html.Raw(Json.Serialize(Model)));
+    </script>
+    @{
+        if (ViewBag.Components != null)
+        {
+
+            foreach (string c in ViewBag.Components)
+            {
+                @Html.Component(c);
+            }
+        }
+        var controller = ViewContext.RouteData.Values["Controller"].ToString().ToUnderscoreCase();
+        var action = ViewContext.RouteData.Values["Action"].ToString().ToUnderscoreCase();
+    }
+    <script id="application" type="text/javascript" src="@($"/vue/root/{ controller }/{ action }.js")"></script>
+
+</body>
+</html>

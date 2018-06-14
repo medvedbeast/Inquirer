@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <!-- meta -->
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <!-- libraries -->
+    <script src="~/vendor/vue/dist/vue.min.js"></script>
+    <script src="~/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/vendor/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <!-- scripts -->
+    @if (ViewBag.Scripts != null)
+    {
+        foreach (var script in ViewBag.Scripts)
+        {
+            <script src="~/js/@script" type="text/javascript"></script>
+        }
+    }
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900&amp;subset=cyrillic-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <!-- stylesheets -->
+    <link href="~/css/_authorization.css" rel="stylesheet" type="text/css" />
+    @if (ViewBag.Stylesheets != null)
+    {
+        foreach (var style in ViewBag.Stylesheets)
+        {
+            <link href="~/css/@style" rel="stylesheet" type="text/css" />
+        }
+    }
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>

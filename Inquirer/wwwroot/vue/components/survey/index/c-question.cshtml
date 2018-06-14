@@ -1,0 +1,61 @@
+﻿@if (Model.Section == "template")
+{
+    <div :id="`question[${ key }]`" class="question block bounded" :class="type">
+        <div class="header">
+            <div class="title">
+                <span class="index">#{{ key + 1 }} :</span> {{ title }}
+                <span class="required">{{ isRequired == true ? "*" : "" }}</span>
+            </div>
+        </div>
+        <div class="content">
+            <div v-if="image != null" class="image">
+                <img :src="image" v-on:click="OnEnlargeImageClicked" />
+            </div>
+            <component :is="type"
+                       :element="element"
+                       ref="answer">
+            </component>
+            <span v-show="errors.has(`question[${ key }]`)" class="error">
+                {{ errors.first(`question[${ key }]`) }}
+            </span>
+        </div>
+    </div>
+}
+else
+{
+    <script id="c-question-script" type="text/javascript">
+        Vue.component("c-question", {
+            template: "#c-question-template",
+            props: ["element"],
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    key: null,
+                    id: null,
+                    title: null,
+                    image: null,
+                    type: null,
+                    isRequired: null
+                };
+            },
+            created: function () {
+                this.key = this.element.key;
+                this.id = this.element.id;
+                this.title = this.element.title;
+                this.image = this.element.image;
+                this.type = this.element.type;
+                this.isRequired = this.element.isRequired;
+            },
+            computed: {
+                result: function () {
+                    return this.$refs.answer.result;
+                }
+            },
+            methods: {
+                OnEnlargeImageClicked: function () {
+                    events.$emit("ImageEnlarged", this.image);
+                }
+            }
+        });
+    </script>
+}

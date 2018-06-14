@@ -1,0 +1,137 @@
+﻿@if (Model.Section == "template")
+{
+    <div :id="`question[${ key }]`" class="question bounded" :class="type">
+        <div class="header">
+            <div class="title">Питання #{{ index + 1 }} : {{ $parent.questionTypes[type].label }}</div>
+        </div>
+        <div class="content">
+            <div class="input">
+                <label>Заголовок</label>
+                <input class="shadowed" :name="`question[${ key }].title`" v-model="title" v-validate="'required'" />
+                <div class="filename" v-if="image.filename.length > 0" :title="image.filename">
+                    Зображення: <u v-on:click="OnEnlargeImageClicked">{{ image.filename }}</u>
+                </div>
+                <div class="icon" title="Видалити зображення" v-if="image.filename.length > 0" v-on:click="OnDeleteQuestionImageClicked">
+                    highlight_off
+                </div>
+                <div class="icon" title="Додати фото" v-if="image.filename.length == 0" v-on:click="OnAddQuestionImageClicked">
+                    camera_alt
+                </div>
+                <span v-show="errors.has(`question[${ key }].title`)" class="error">{{ errors.first(`question[${ key }].title`) }}</span>
+                <input type="file" accept="image/*" :id="`question[${ key }].image`" v-on:change="OnQuestionImageChanged" />
+            </div>
+            <component v-if="$parent.questionTypes[type].component != null"
+                       :is="$parent.questionTypes[type].component"
+                       :element="element"
+                       ref="options">
+            </component>
+        </div>
+        <div class="footer">
+            <template v-for="b in buttons" v-if="b.condition ? b.condition() == true : true">
+                <div class="button shadowed" v-on:click="b.callback" :key="b.label">
+                    <div class="icon">{{ b.icon || "add" }}</div>
+                    <div class="label">{{ b.label }}</div>
+                </div>
+            </template>
+            <a class="link shadowed" v-on:click="$parent.OnCopyQuestionClicked(index)">
+                <div class="icon">content_copy</div>
+                <div class="label">Копіювати</div>
+            </a>
+            <a class="link shadowed" v-on:click="$parent.OnDeleteQuestionClicked(index)">
+                <div class="icon">delete</div>
+                <div class="label">Видалити</div>
+            </a>
+            <div class="spacer"></div>
+            <div class="input">
+                <input type="checkbox" v-model="isRequired" :id="`question[${ key }].required`" :value="true" />
+                <label :for="`question[${ key }].required`">Обов'язкове питання</label>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <script id="c-question-script" type="text/javascript">
+        Vue.component("c-question", {
+            template: "#c-question-template",
+            props: ["element"],
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    id: null,
+                    title: null,
+                    image: {
+                        data: null,
+                        filename: ""
+                    },
+                    isRequired: false,
+                    buttons: []
+                };
+            },
+            created: function () {
+                if (this.element.data) {
+                    this.id = this.element.data.id;
+                    this.title = this.element.data.title;
+                    this.image = {
+                        data: this.element.data.image,
+                        filename: this.element.data.image ? "зображення.png" : ""
+                    };
+                    this.isRequired = this.element.isRequired;
+                }
+            },
+            mounted: function () {
+                if (this.$refs.options) {
+                    this.buttons = this.$refs.options.buttons;
+                }
+            },
+            computed: {
+                index: function () {
+                    return this.element.index;
+                },
+                type: function () {
+                    return this.element.type;
+                },
+                key: function () {
+                    return this.element.key;
+                },
+                result: function () {
+                    var r = {
+                        id: this.element.data ? this.element.data.id : null,
+                        title: this.title,
+                        image: this.image.data,
+                        typeId: this.$parent.questionTypes[this.type].id,
+                        isRequired: this.isRequired
+                    }
+                    if (this.$parent.questionTypes[this.type].component != null) {
+                        r.options = this.$refs.options.result;
+                    }
+                    else {
+                        r.options = [];
+                    }
+                    return r;
+                }
+            },
+            methods: {
+                OnAddQuestionImageClicked: function () {
+                    $(`#question\\[${this.key}\\]\\.image`).click();
+                },
+                OnDeleteQuestionImageClicked: function () {
+                    this.image.data = "";
+                    this.image.filename = "";
+                    $(`#question\\[${this.key}\\]\\.image`).val("");
+                },
+                OnQuestionImageChanged: async function () {
+                    var input = $(`#question\\[${this.key}\\]\\.image`)[0];
+                    if (input.files.length > 0) {
+                        this.image.filename = input.files[0].name;
+                        var reader = new ImageInputReader(`question\\[${this.key}\\]\\.image`, true, 1920, 1080);
+                        this.image.data = await reader.Run(true);
+                    }
+                },
+                OnEnlargeImageClicked: function () {
+                    events.$emit("ImageEnlarged", this.image.data);
+                }
+            }
+        });
+    </script>
+}

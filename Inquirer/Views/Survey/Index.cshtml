@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Проходження опитування | Inquirer";
+    ViewBag.Stylesheets = new[] { "survey.css" };
+    ViewBag.Components = new string[]
+    {
+        "c-header",
+        "c-account-panel",
+        "c-image-panel",
+        "c-login-dialog",
+        "c-information-dialog",
+        "c-question",
+        "q-text",
+        "q-choice",
+        "q-multi-choice",
+        "q-grid",
+        "q-multi-grid",
+        "q-date",
+        "q-time",
+        "q-select",
+        "q-range"
+    };
+}
+<header class="shadowed">
+    <component is="c-header"></component>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <component is="c-account-panel"></component>
+    }
+</header>
+<form>
+    <main class="page">
+        <div id="controls" v-if="survey.creatorId == user.id">
+            <a :href="`/survey/${ survey.id }/edit`" class="button shadowed">
+                <div class="icon">edit</div>
+                <div class="label">Редагувати</div>
+            </a>
+            <a :href="`/survey/${ survey.id }/statistics`" class="button shadowed">
+                <div class="icon">assessment</div>
+                <div class="label">Статистика</div>
+            </a>
+            <a class="button shadowed">
+                <div class="icon">share</div>
+                <div class="label">Поширити</div>
+            </a>
+            <div class="spacer"></div>
+            <a class="button shadowed" v-on:click="OnDeleteSurveyClicked">
+                <div class="icon">clear</div>
+                <div class="label">Видалити</div>
+            </a>
+        </div>
+        <div id="description" class="block bounded">
+            <div class="header">
+                <div class="title">{{ survey.title }}</div>
+            </div>
+            <div class="content">
+                <div>{{ survey.description }}</div>
+                <div class="information">
+                    <div class="item">
+                        <div class="label">Дата початку:</div>
+                        <div class="value">{{ Format(survey.startDate, "dd.MM.yyyy HH:mm") }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Дата закінчення:</div>
+                        <div class="value">{{ Format(survey.endDate, "dd.MM.yyyy HH:mm") }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Статус опитування:</div>
+                        <div class="value">{{ survey.isOpen ? "Відкрите" : "Закрите" }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Доступність</div>
+                        <div class="value">{{ survey.isAuthenticationRequired  == false ? "Для всіх" : "Тільки для зареєстрованих" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="questions">
+            <component is="c-question"
+                       v-for="question in survey.questions"
+                       :key="question.key"
+                       :ref="`question[${question.key}]`"
+                       :element="question">
+            </component>
+        </div>
+        <div class="submit">
+            <div class="title">Завершити проходження опитування:</div>
+            <div class="spacer"></div>
+            <span class="message" :class="{ error: message.status }">{{ message.content }}</span>
+            <div class="button shadowed" v-on:click="OnSendAnswersClicked">
+                <div class="icon">send</div>
+                <div class="label">Завершити</div>
+            </div>
+        </div>
+    </main>
+</form>
+<component is="c-image-panel"></component>
+<component is="c-login-dialog"></component>
+<component is="c-information-dialog"></component>

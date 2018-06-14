@@ -1,0 +1,119 @@
+﻿@model GenericViewModel
+@if (Model.Section == "template")
+{
+    <div :id="id" class="block shadowed" columns="2">
+        <div class="header">
+            <div class="title">Активні ключі</div>
+            <div class="spacer"></div>
+            <div class="icon" v-on:click="OnCreateKeyClicked" title="Створити ключ">add</div>
+        </div>
+        <div class="content">
+            <div v-if="keys.length > 0">
+                <div class="item" v-for="key in keys" :item-id="key.id">
+                    <div>
+                        <div class="type" v-bind:class="key.type.name">{{ key.type.name }}</div>
+                        <div class="spacer"></div>
+                        <div class="icon" title="Змінити опис ключа" v-on:click="OnEditKeyClicked(key.id)">edit</div>
+                        <div class="icon" title="Видалити ключ" v-on:click="OnDeleteKeyClicked(key.id)">delete</div>
+                    </div>
+                    <div class="name">{{ key.name }}</div>
+                    <div class="value">{{ key.content }}</div>
+                </div>
+            </div>
+            <div v-else class="placeholder">
+                <div class="icon">info_outline</div>
+                <div class="label">Ключі не знайдені.</div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        Vue.component("key-list-component", {
+            template: "#key-list-component-template",
+            data: function () {
+                return {
+                    id: "key-list-component",
+                    keys: []
+                }
+            },
+            created: function () {
+                this.Initialize();
+            },
+            mounted: function () {
+                events.$on("KeyAdded", this.OnKeyAdded);
+                events.$on("DeleteKeyConfirmed", this.OnDeleteConfirmed);
+            },
+            methods: {
+                Initialize: function () {
+                    var self = this;
+                    $.ajax({
+                        url: "/api/keys",
+                        method: "GET",
+                        success: function (data) {
+                            self.keys = data;
+                        }
+                    });
+                },
+                GetKey: function (id) {
+                    for (var i = 0; i < this.keys.length; i++) {
+                        if (id == this.keys[i].id) {
+                            return this.keys[i];
+                        }
+                    }
+                    return null;
+                },
+                RemoveKey: function (id) {
+                    for (var i = 0; i < this.keys.length; i++) {
+                        if (id == this.keys[i].id) {
+                            this.keys.splice(i, 1);
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                OnDeleteConfirmed: function (id) {
+                    const self = this;
+
+                    $.ajax({
+                        url: `/api/keys/${id}`,
+                        method: "DELETE",
+                        success: function (response) {
+                            if (response === true) {
+                                self.RemoveKey(id);
+                            }
+                        }
+                    });
+                },
+                OnKeyAdded: function (key) {
+                    this.keys.push(key);
+                },
+                OnCreateKeyClicked: function () {
+                    events.$emit(
+                        "ShowCreateKeyDialog"
+                    );
+                },
+                OnEditKeyClicked: function (id) {
+                    var key = this.GetKey(id);
+                    events.$emit(
+                        "ShowEditKeyDialog",
+                        key
+                    );
+                },
+                OnDeleteKeyClicked: function (id) {
+                    var key = this.GetKey(id);
+                    events.$emit(
+                        "ShowConfirmDialog",
+                        {
+                            text: `Ви впевнені, що хочете видалити ключ <b>'${key.name}'</b>?`,
+                            confirmText: "Видалити",
+                            confirmData: key.id,
+                            confirmDelegate: "DeleteKeyConfirmed"
+                        }
+                    );
+                }
+            }
+        });
+    </script>
+}

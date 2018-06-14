@@ -1,0 +1,41 @@
+﻿@if (Model.Section == "template")
+{
+    <div class="input">
+        <label>Ваша відповідь:</label>
+        <input type="date" class="shadowed" :name="`question[${ $parent.key }]`" v-model="answer" v-validate="$parent.isRequired == true ?'question_required|required' : ''" />
+    </div>
+}
+else
+{
+    <script id="q-date-script" type="text/javascript">
+        Vue.component("q-date", {
+            template: "#q-date-template",
+            props: ["element"],
+            inject: ["$validator"],
+            data: () => {
+                return {
+                    answer: null
+                };
+            },
+            computed: {
+                result: function () {
+                    var result = [];
+
+                    if (this.answer != null) {
+                        result.push(new Answer(
+                            null,
+                            this.answer,
+                            null,
+                            this.element.id,
+                            application.user.id
+                        ));
+                    } else {
+                        result = null;
+                    }
+
+                    return result;
+                }
+            }
+        });
+    </script>
+}

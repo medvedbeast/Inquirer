@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Редагування опитування | Inquirer";
+    ViewBag.Stylesheets = new[] { "edit-survey.css" };
+    ViewBag.Components = new[]
+    {
+        "c-header",
+        "c-account-panel",
+        "c-image-panel",
+        "c-information-dialog",
+        "c-question",
+        "q-choice",
+        "q-grid",
+        "q-range"
+    };
+}
+<header class="shadowed">
+    <component is="c-header"></component>
+    <component is="c-account-panel"></component>
+</header>
+<form>
+    <main class="page">
+        <div id="controls">
+            <a class="button shadowed" v-on:click="OnSaveClicked">
+                <div class="icon">done</div>
+                <div class="label">Зберегти</div>
+            </a>
+            <a :href="`/survey/${ survey.id }`" class="button shadowed">
+                <div class="icon">remove_red_eye</div>
+                <div class="label">Переглянути</div>
+            </a>
+            <div class="spacer"></div>
+            <a class="button shadowed" v-on:click="OnDeleteSurveyClicked">
+                <div class="icon">clear</div>
+                <div class="label">Видалити</div>
+            </a>
+        </div>
+        <div id="information" class="block bounded">
+            <div class="header">
+                <div class="title">Інформація про опитування</div>
+                <div class="spacer"></div>
+                <div class="message">{{ message }}</div>
+            </div>
+            <div class="content grid">
+                <div class="input item" c-start="1" c-end="13">
+                    <label>Назва опитування</label>
+                    <input class="shadowed" name="title" type="text" v-model="survey.title" v-validate="'required'" />
+                    <span v-show="errors.has('title')" class="error">{{ errors.first('title') }}</span>
+                </div>
+                <div class="input item" c-start="1" c-end="13" r-start="2">
+                    <label>Опис опитування</label>
+                    <textarea class="shadowed" name="description" type="text" v-model="survey.description"></textarea>
+                    <span v-show="errors.has('description')" class="error">{{ errors.first('description') }}</span>
+                </div>
+                <div class="input item" c-start="1" c-end="4" r-start="3">
+                    <label>Дата початку</label>
+                    <input class="shadowed" name="startDate" type="datetime-local" v-model="survey.startDate" v-validate="'required'" />
+                    <span v-show="errors.has('startDate')" class="error">{{ errors.first('startDate') }}</span>
+                </div>
+                <div class="input item" c-start="4" c-end="7" r-start="3">
+                    <label>Дата закінчення</label>
+                    <input class="shadowed" name="endDate" type="datetime-local" v-model="survey.endDate" v-validate="'required'" />
+                    <span v-show="errors.has('endDate')" class="error">{{ errors.first('endDate') }}</span>
+                </div>
+                <div class="input item" c-start="7" c-end="10" r-start="3">
+                    <label>Статус опитування</label>
+                    <select class="shadowed" name="isOpen" v-model="survey.isOpen">
+                        <option :value="true">Відкрите</option>
+                        <option :value="false">Закрите</option>
+                    </select>
+                </div>
+                <div class="input item" c-start="10" c-end="13" r-start="3">
+                    <label>Доступність</label>
+                    <select class="shadowed" name="isAuthenticationRequired" v-model="survey.isAuthenticationRequired">
+                        <option :value="false">Для всіх</option>
+                        <option :value="true">Тільки для зареєстрованих</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="questions" class="block">
+            <component is="c-question"
+                       v-for="question in survey.questions"
+                       :key="question.key"
+                       :ref="`question[${question.key}]`"
+                       :element="question">
+            </component>
+            <div class="placeholder">
+                <div class="title">
+                    <div class="label">Створити нове питання:</div>
+                </div>
+                <div class="container">
+                    <div class="button shadowed" title="Текстова відповідь" v-on:click="OnCreateQuestionClicked('q-text')">
+                        <div class="icon">text_fields</div>
+                    </div>
+                    <div class="button shadowed" title="Варіанти відповіді" v-on:click="OnCreateQuestionClicked('q-choice')">
+                        <div class="icon">radio_button_checked</div>
+                    </div>
+                    <div class="button shadowed" title="Кілька варіантів" v-on:click="OnCreateQuestionClicked('q-multi-choice')">
+                        <div class="icon">check_box</div>
+                    </div>
+                    <div class="button shadowed" title="Сітка відповідей" v-on:click="OnCreateQuestionClicked('q-grid')">
+                        <div class="icon">border_clear</div>
+                    </div>
+                    <div class="button shadowed" title="Сітка відповідей (кілька варіантів)" v-on:click="OnCreateQuestionClicked('q-multi-grid')">
+                        <div class="icon">border_all</div>
+                    </div>
+                    <div class="button shadowed" title="Дата" v-on:click="OnCreateQuestionClicked('q-date')">
+                        <div class="icon">date_range</div>
+                    </div>
+                    <div class="button shadowed" title="Час" v-on:click="OnCreateQuestionClicked('q-time')">
+                        <div class="icon">access_time</div>
+                    </div>
+                    <div class="button shadowed" title="Випадаючий список" v-on:click="OnCreateQuestionClicked('q-select')">
+                        <div class="icon">arrow_drop_down_circle</div>
+                    </div>
+                    <div class="button shadowed" title="Шкала" v-on:click="OnCreateQuestionClicked('q-range')">
+                        <div class="icon">linear_scale</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+<component is="c-image-panel"></component>
+<component is="c-information-dialog"></component>

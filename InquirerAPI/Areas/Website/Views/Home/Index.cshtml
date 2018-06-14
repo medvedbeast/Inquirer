@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_Default";
+    ViewBag.Title = "Головна сторінка | InquirerAPI";
+    ViewBag.Stylesheets = new[] { "home.css" };
+    ViewBag.Components = new[]
+    {
+        VueComponent.Create<CreateKeyViewModel>("create-key-dialog"),
+        VueComponent.Create<EditKeyViewModel>("edit-key-dialog"),
+        VueComponent.Create<EditAccountViewModel>("edit-account-dialog"),
+        VueComponent.Create("activity-log-component"),
+        VueComponent.Create("key-list-component"),
+        VueComponent.Create("confirm-dialog")
+    };
+}
+<div class="container">
+    <activity-log-component></activity-log-component>
+    <key-list-component></key-list-component>
+</div>
+<create-key-dialog></create-key-dialog>
+<edit-key-dialog></edit-key-dialog>
+<edit-account-dialog></edit-account-dialog>
+<confirm-dialog></confirm-dialog>
+@section vue {
+    <script type="text/javascript">
+        var application = new Vue({
+            el: "#page-root",
+            data: @(Html.Raw(Json.Serialize(Model))),
+            methods: {
+                OnEditAccountClicked: function () {
+                    events.$emit("ShowEditAccountDialog");
+                }
+            }
+        });
+    </script>
+}

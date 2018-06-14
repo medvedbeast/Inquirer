@@ -1,0 +1,113 @@
+﻿button[type=submit]
+{
+    display: none;
+}
+
+.block#information
+{
+    background-color: white;
+}
+
+.block#additional-information
+{
+    margin: 20px 0 0 0;
+}
+
+.block#image
+{
+    background-color: white;
+}
+
+.block#image .content
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.block#image .content .icon
+{
+    font-size: 200px;
+    color: #cecece;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 265px;
+    height: 265px;
+}
+
+.block#image .content .image
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 265px;
+    height: 265px;
+    box-sizing: border-box;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.block#image .content .popup
+{
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    bottom: 0;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    opacity: 1;
+    transition: 0.2s all ease-in-out;
+}
+
+.block#image .content .popup.hidden
+{
+    opacity: 0;
+}
+
+.block#image input[type="file"]
+{
+    display: none;
+}
+
+.block#image canvas
+{
+    display: none;
+}
+
+.block#controls
+{
+    margin: 20px 0 0 0;
+}
+
+.block#controls .button
+{
+    width: 100%;
+    margin: 0 0 20px 0;
+    color: white;
+    border: 0;
+    border-radius: 2px;
+    background-color: #03A9F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 41px;
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+}
+
+.block#controls .button:hover
+{
+    background-color: #01579B;
+}
+
+.block#controls .button .label
+{
+    margin: 0 0 0 5px;
+}

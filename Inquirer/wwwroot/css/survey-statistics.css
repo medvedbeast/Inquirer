@@ -1,0 +1,191 @@
+﻿#controls
+{
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 0;
+    padding: 20px;
+    border: 1px dashed #cecece;
+}
+
+#controls .button
+{
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 2px;
+    background-color: #03A9F4;
+    color: white;
+    margin: 0 0 0 10px;
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+}
+
+#controls .button:hover
+{
+    background-color: #01579B;
+}
+
+#controls .button:first-child
+{
+    margin: 0;
+}
+
+#controls .button .label
+{
+    margin: 0 0 0 10px;
+}
+
+
+#controls .spacer
+{
+    flex-grow: 1;
+}
+
+/*************************************************************/
+
+#questions .question
+{
+    margin: 20px 0 0 0;
+}
+
+#questions .question .option
+{
+    display: flex;
+    align-items: center;
+}
+
+#questions .question .option .row,
+#questions .question .option .column
+{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    color: white;
+    background-color: #01579B;
+}
+
+#questions .question .option .column
+{
+    border-radius: 50%;
+}
+
+#questions .question .option .label
+{
+    margin: 0 10px;
+}
+
+#questions .question .option .spacer
+{
+    flex-grow: 1;
+}
+
+#questions .question .option .quantity
+{
+    color: #cecece;
+}
+/*************************************************************************************************/
+#questions .question svg .canvas
+{
+    display: flex;
+    /*
+    justify-content: center;
+    */
+    align-items: flex-end;
+}
+
+#questions .question svg .canvas .group
+{
+    margin: 0 0 0 20px;
+}
+
+#questions .question svg .canvas .group:first-child
+{
+    margin: 0;
+}
+
+#questions .question svg .canvas .group .container
+{
+    display: flex;
+}
+
+#questions .question svg .canvas .group .container:first-child
+{
+    margin: 0;
+}
+
+#questions .question svg .canvas .group .container .item
+{
+    margin: 0 0 0 20px;
+}
+
+
+#questions .question svg .canvas .group .container .item:first-child
+{
+    margin: 0;
+}
+
+#questions .question svg .canvas .group .container .item .column
+{
+    background-color: #03A9F4;
+    width: 75px;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#questions .question svg .canvas .group .container .item .column .title
+{
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #01579B;
+    color: white;
+}
+
+#questions .question svg .canvas .group .container .item.empty .column
+{
+    background-color: #E1F5FE;
+}
+
+#questions .question svg .canvas .group .legend
+{
+    position: relative;
+}
+
+#questions .question svg .canvas .group .legend .line
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 20px;
+    box-sizing: border-box;
+    border: 1px solid #cecece;
+    border-top: 0;
+    z-index: -1;
+}
+
+#questions .question svg .canvas .group .legend .label
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#questions .question svg .canvas .group .legend .label span
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    font-size: 1.6em;
+}
