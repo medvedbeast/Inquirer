@@ -7,7 +7,7 @@ Technologies used: ASP.NET Core 2.0 + Vue.JS.
 
 
 
-<h1>
+<h2>
 <b>API log page:
 
 ![Image 1](./readme/1.png)
@@ -38,6 +38,6 @@ Inquirer poll edit page (end):
 
 
 
-Inquirer poll statistics page:</b></h1>
+Inquirer poll statistics page:</b></h2>
 
 ![Image 6](./readme/6.png)
